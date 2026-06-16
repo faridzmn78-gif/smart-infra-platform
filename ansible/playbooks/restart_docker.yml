@@ -1,0 +1,14 @@
+---
+- name: Restart Docker Service
+
+  hosts: local
+
+  become: false
+
+  tasks:
+
+    - name: Show restart message
+
+      debug:
+
+        msg: "Docker restart action executed"

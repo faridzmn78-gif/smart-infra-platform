@@ -1,0 +1,99 @@
+services:
+
+  backend:
+    build: ./backend
+
+    container_name: backend
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - postgres
+
+    restart: always
+
+    networks:
+      - smart-net
+
+
+  postgres:
+    image: postgres:16
+
+    container_name: postgres
+
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: smart_infra
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    restart: always
+
+    networks:
+      - smart-net
+
+
+  agent:
+    build: ./monitoring-agent
+
+    container_name: agent
+
+    depends_on:
+      - backend
+
+    restart: always
+
+    networks:
+      - smart-net
+
+
+  ml-engine:
+    build: ./ml-engine
+
+    container_name: ml-engine
+
+    depends_on:
+      - postgres
+
+    restart: always
+
+    networks:
+      - smart-net
+
+
+  grafana:
+    image: grafana/grafana
+
+    container_name: grafana
+
+    ports:
+      - "3000:3000"
+
+    restart: always
+
+    depends_on:
+      - postgres
+
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+
+    networks:
+      - smart-net
+
+
+networks:
+  smart-net:
+
+
+volumes:
+  postgres_data:

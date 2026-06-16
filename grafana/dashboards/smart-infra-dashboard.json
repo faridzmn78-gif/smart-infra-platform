@@ -1,0 +1,1313 @@
+{
+  "annotations": [
+    {
+      "kind": "AnnotationQuery",
+      "spec": {
+        "builtIn": true,
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "query": {
+          "datasource": {
+            "name": "-- Grafana --"
+          },
+          "group": "grafana",
+          "kind": "DataQuery",
+          "spec": {},
+          "version": "v0"
+        }
+      }
+    }
+  ],
+  "cursorSync": "Off",
+  "editable": true,
+  "elements": {
+    "panel-1": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "PCC52D03280B7034C"
+                    },
+                    "group": "grafana-postgresql-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "dataset": "smart_infra",
+                      "editorMode": "code",
+                      "format": "table",
+                      "rawQuery": true,
+                      "rawSql": "SELECT cpu\r\nFROM metrics\r\nORDER BY id DESC\r\nLIMIT 1;",
+                      "sql": {
+                        "columns": [
+                          {
+                            "parameters": [],
+                            "type": "function"
+                          }
+                        ],
+                        "groupBy": [
+                          {
+                            "property": {
+                              "type": "string"
+                            },
+                            "type": "groupBy"
+                          }
+                        ],
+                        "limit": 50
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 1,
+        "links": [],
+        "title": "CPU Usage",
+        "vizConfig": {
+          "group": "gauge",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 60
+                    },
+                    {
+                      "color": "semi-dark-red",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "barShape": "flat",
+              "barWidthFactor": 0.5,
+              "effects": {
+                "barGlow": false,
+                "centerGlow": false,
+                "gradient": true
+              },
+              "endpointMarker": "point",
+              "minVizHeight": 75,
+              "minVizWidth": 75,
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "segmentCount": 1,
+              "segmentSpacing": 0.3,
+              "shape": "gauge",
+              "showThresholdLabels": false,
+              "showThresholdMarkers": true,
+              "sizing": "auto",
+              "sparkline": true,
+              "textMode": "auto"
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-10": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "PCC52D03280B7034C"
+                    },
+                    "group": "grafana-postgresql-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "dataset": "smart_infra",
+                      "editorMode": "code",
+                      "format": "table",
+                      "rawQuery": true,
+                      "rawSql": "SELECT COUNT(*)\r\nFROM ml_predictions\r\nWHERE prediction = 'anomaly'\r\nAND metric_id IN (\r\n    SELECT id\r\n    FROM metrics\r\n    WHERE created_at >= NOW() - INTERVAL '1 hour'\r\n);",
+                      "sql": {
+                        "columns": [
+                          {
+                            "parameters": [],
+                            "type": "function"
+                          }
+                        ],
+                        "groupBy": [
+                          {
+                            "property": {
+                              "type": "string"
+                            },
+                            "type": "groupBy"
+                          }
+                        ],
+                        "limit": 50
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 10,
+        "links": [],
+        "title": "ML Anomalies (Last Hour)",
+        "vizConfig": {
+          "group": "stat",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 1
+                    },
+                    {
+                      "color": "semi-dark-red",
+                      "value": 4
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "percentChangeColorMode": "standard",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showPercentChange": false,
+              "textMode": "auto",
+              "wideLayout": true
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-2": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "PCC52D03280B7034C"
+                    },
+                    "group": "grafana-postgresql-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "dataset": "smart_infra",
+                      "editorMode": "code",
+                      "format": "table",
+                      "rawQuery": true,
+                      "rawSql": "SELECT ram\r\nFROM metrics\r\nORDER BY id DESC\r\nLIMIT 1;",
+                      "sql": {
+                        "columns": [
+                          {
+                            "parameters": [],
+                            "type": "function"
+                          }
+                        ],
+                        "groupBy": [
+                          {
+                            "property": {
+                              "type": "string"
+                            },
+                            "type": "groupBy"
+                          }
+                        ],
+                        "limit": 50
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 2,
+        "links": [],
+        "title": "RAM Usage",
+        "vizConfig": {
+          "group": "gauge",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 75
+                    },
+                    {
+                      "color": "semi-dark-red",
+                      "value": 85
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "barShape": "flat",
+              "barWidthFactor": 0.5,
+              "effects": {
+                "barGlow": false,
+                "centerGlow": false,
+                "gradient": true
+              },
+              "endpointMarker": "point",
+              "minVizHeight": 75,
+              "minVizWidth": 75,
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "segmentCount": 1,
+              "segmentSpacing": 0.3,
+              "shape": "gauge",
+              "showThresholdLabels": false,
+              "showThresholdMarkers": true,
+              "sizing": "auto",
+              "sparkline": true,
+              "textMode": "auto"
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-3": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "PCC52D03280B7034C"
+                    },
+                    "group": "grafana-postgresql-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "dataset": "smart_infra",
+                      "editorMode": "code",
+                      "format": "table",
+                      "rawQuery": true,
+                      "rawSql": "SELECT disk\r\nFROM metrics\r\nORDER BY id DESC\r\nLIMIT 1;",
+                      "sql": {
+                        "columns": [
+                          {
+                            "parameters": [],
+                            "type": "function"
+                          }
+                        ],
+                        "groupBy": [
+                          {
+                            "property": {
+                              "type": "string"
+                            },
+                            "type": "groupBy"
+                          }
+                        ],
+                        "limit": 50
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 3,
+        "links": [],
+        "title": "Disk Usage",
+        "vizConfig": {
+          "group": "gauge",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 75
+                    },
+                    {
+                      "color": "semi-dark-red",
+                      "value": 90
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "barShape": "flat",
+              "barWidthFactor": 0.5,
+              "effects": {
+                "barGlow": false,
+                "centerGlow": false,
+                "gradient": true
+              },
+              "endpointMarker": "point",
+              "minVizHeight": 75,
+              "minVizWidth": 75,
+              "orientation": "auto",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "segmentCount": 1,
+              "segmentSpacing": 0.3,
+              "shape": "gauge",
+              "showThresholdLabels": false,
+              "showThresholdMarkers": true,
+              "sizing": "auto",
+              "sparkline": true,
+              "textMode": "auto"
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-4": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "PCC52D03280B7034C"
+                    },
+                    "group": "grafana-postgresql-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "dataset": "smart_infra",
+                      "editorMode": "code",
+                      "format": "table",
+                      "rawQuery": true,
+                      "rawSql": "SELECT COUNT(*) AS value\r\nFROM servers;",
+                      "sql": {
+                        "columns": [
+                          {
+                            "parameters": [],
+                            "type": "function"
+                          }
+                        ],
+                        "groupBy": [
+                          {
+                            "property": {
+                              "type": "string"
+                            },
+                            "type": "groupBy"
+                          }
+                        ],
+                        "limit": 50
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 4,
+        "links": [],
+        "title": "Total Servers",
+        "vizConfig": {
+          "group": "stat",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "semi-dark-red",
+                      "value": 0
+                    },
+                    {
+                      "color": "green",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "percentChangeColorMode": "standard",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showPercentChange": false,
+              "textMode": "auto",
+              "wideLayout": true
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-5": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "PCC52D03280B7034C"
+                    },
+                    "group": "grafana-postgresql-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "dataset": "smart_infra",
+                      "editorMode": "code",
+                      "format": "table",
+                      "rawQuery": true,
+                      "rawSql": "SELECT COUNT(*) AS value\r\nFROM metrics;",
+                      "sql": {
+                        "columns": [
+                          {
+                            "parameters": [],
+                            "type": "function"
+                          }
+                        ],
+                        "groupBy": [
+                          {
+                            "property": {
+                              "type": "string"
+                            },
+                            "type": "groupBy"
+                          }
+                        ],
+                        "limit": 50
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 5,
+        "links": [],
+        "title": "Metrics Collected",
+        "vizConfig": {
+          "group": "stat",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "percentChangeColorMode": "standard",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showPercentChange": false,
+              "textMode": "auto",
+              "wideLayout": true
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-6": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "PCC52D03280B7034C"
+                    },
+                    "group": "grafana-postgresql-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "dataset": "smart_infra",
+                      "editorMode": "code",
+                      "format": "table",
+                      "rawQuery": true,
+                      "rawSql": "SELECT COUNT(*) AS value\r\nFROM anomalies\r\nWHERE\r\n    cpu_status = 'anomaly'\r\n    OR ram_status = 'anomaly'\r\n    OR disk_status = 'anomaly';",
+                      "sql": {
+                        "columns": [
+                          {
+                            "parameters": [],
+                            "type": "function"
+                          }
+                        ],
+                        "groupBy": [
+                          {
+                            "property": {
+                              "type": "string"
+                            },
+                            "type": "groupBy"
+                          }
+                        ],
+                        "limit": 50
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 6,
+        "links": [],
+        "title": "Anomalies Detected",
+        "vizConfig": {
+          "group": "stat",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 5
+                    },
+                    {
+                      "color": "semi-dark-red",
+                      "value": 20
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "percentChangeColorMode": "standard",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showPercentChange": false,
+              "textMode": "auto",
+              "wideLayout": true
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-7": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "PCC52D03280B7034C"
+                    },
+                    "group": "grafana-postgresql-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "dataset": "smart_infra",
+                      "editorMode": "code",
+                      "format": "table",
+                      "rawQuery": true,
+                      "rawSql": "SELECT\r\nCASE\r\n    WHEN COUNT(*) = 0 THEN 100\r\n    ELSE\r\n        ROUND(\r\n            (\r\n                SUM(\r\n                    CASE\r\n                        WHEN cpu_status = 'normal'\r\n                         AND ram_status = 'normal'\r\n                         AND disk_status = 'normal'\r\n                        THEN 1\r\n                        ELSE 0\r\n                    END\r\n                )::numeric\r\n                /\r\n                COUNT(*)\r\n            ) * 100\r\n        )\r\nEND AS value\r\nFROM anomalies a\r\nJOIN metrics m\r\n    ON a.metric_id = m.id\r\nWHERE m.created_at >= NOW() - INTERVAL '1 hour';",
+                      "sql": {
+                        "columns": [
+                          {
+                            "parameters": [],
+                            "type": "function"
+                          }
+                        ],
+                        "groupBy": [
+                          {
+                            "property": {
+                              "type": "string"
+                            },
+                            "type": "groupBy"
+                          }
+                        ],
+                        "limit": 50
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 7,
+        "links": [],
+        "title": "System Health (Last Hour)",
+        "vizConfig": {
+          "group": "stat",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "semi-dark-red",
+                      "value": 0
+                    },
+                    {
+                      "color": "orange",
+                      "value": 30
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 60
+                    },
+                    {
+                      "color": "green",
+                      "value": 80
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "percentChangeColorMode": "standard",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showPercentChange": false,
+              "textMode": "auto",
+              "wideLayout": true
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-8": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "PCC52D03280B7034C"
+                    },
+                    "group": "grafana-postgresql-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "dataset": "smart_infra",
+                      "editorMode": "code",
+                      "format": "table",
+                      "rawQuery": true,
+                      "rawSql": "SELECT COUNT(*) AS total_predictions\r\nFROM ml_predictions;",
+                      "sql": {
+                        "columns": [
+                          {
+                            "parameters": [],
+                            "type": "function"
+                          }
+                        ],
+                        "groupBy": [
+                          {
+                            "property": {
+                              "type": "string"
+                            },
+                            "type": "groupBy"
+                          }
+                        ],
+                        "limit": 50
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 8,
+        "links": [],
+        "title": "ML Predictions",
+        "vizConfig": {
+          "group": "stat",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "percentChangeColorMode": "standard",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showPercentChange": false,
+              "textMode": "auto",
+              "wideLayout": true
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    },
+    "panel-9": {
+      "kind": "Panel",
+      "spec": {
+        "data": {
+          "kind": "QueryGroup",
+          "spec": {
+            "queries": [
+              {
+                "kind": "PanelQuery",
+                "spec": {
+                  "hidden": false,
+                  "query": {
+                    "datasource": {
+                      "name": "PCC52D03280B7034C"
+                    },
+                    "group": "grafana-postgresql-datasource",
+                    "kind": "DataQuery",
+                    "spec": {
+                      "dataset": "smart_infra",
+                      "editorMode": "code",
+                      "format": "table",
+                      "rawQuery": true,
+                      "rawSql": "SELECT COUNT(*) AS anomalies\r\nFROM ml_predictions\r\nWHERE prediction = 'anomaly';",
+                      "sql": {
+                        "columns": [
+                          {
+                            "parameters": [],
+                            "type": "function"
+                          }
+                        ],
+                        "groupBy": [
+                          {
+                            "property": {
+                              "type": "string"
+                            },
+                            "type": "groupBy"
+                          }
+                        ],
+                        "limit": 50
+                      }
+                    },
+                    "version": "v0"
+                  },
+                  "refId": "A"
+                }
+              }
+            ],
+            "queryOptions": {},
+            "transformations": []
+          }
+        },
+        "description": "",
+        "id": 9,
+        "links": [],
+        "title": "Total ML Anomalies",
+        "vizConfig": {
+          "group": "stat",
+          "kind": "VizConfig",
+          "spec": {
+            "fieldConfig": {
+              "defaults": {
+                "color": {
+                  "mode": "thresholds"
+                },
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": 0
+                    }
+                  ]
+                }
+              },
+              "overrides": []
+            },
+            "options": {
+              "colorMode": "value",
+              "graphMode": "area",
+              "justifyMode": "auto",
+              "orientation": "auto",
+              "percentChangeColorMode": "standard",
+              "reduceOptions": {
+                "calcs": [
+                  "lastNotNull"
+                ],
+                "fields": "",
+                "values": false
+              },
+              "showPercentChange": false,
+              "textMode": "auto",
+              "wideLayout": true
+            }
+          },
+          "version": "13.0.2"
+        }
+      }
+    }
+  },
+  "layout": {
+    "kind": "TabsLayout",
+    "spec": {
+      "tabs": [
+        {
+          "kind": "TabsLayoutTab",
+          "spec": {
+            "layout": {
+              "kind": "RowsLayout",
+              "spec": {
+                "rows": [
+                  {
+                    "kind": "RowsLayoutRow",
+                    "spec": {
+                      "collapse": false,
+                      "layout": {
+                        "kind": "GridLayout",
+                        "spec": {
+                          "items": [
+                            {
+                              "kind": "GridLayoutItem",
+                              "spec": {
+                                "element": {
+                                  "kind": "ElementReference",
+                                  "name": "panel-5"
+                                },
+                                "height": 8,
+                                "width": 12,
+                                "x": 0,
+                                "y": 0
+                              }
+                            },
+                            {
+                              "kind": "GridLayoutItem",
+                              "spec": {
+                                "element": {
+                                  "kind": "ElementReference",
+                                  "name": "panel-4"
+                                },
+                                "height": 8,
+                                "width": 12,
+                                "x": 12,
+                                "y": 0
+                              }
+                            },
+                            {
+                              "kind": "GridLayoutItem",
+                              "spec": {
+                                "element": {
+                                  "kind": "ElementReference",
+                                  "name": "panel-7"
+                                },
+                                "height": 8,
+                                "width": 12,
+                                "x": 0,
+                                "y": 8
+                              }
+                            },
+                            {
+                              "kind": "GridLayoutItem",
+                              "spec": {
+                                "element": {
+                                  "kind": "ElementReference",
+                                  "name": "panel-6"
+                                },
+                                "height": 8,
+                                "width": 12,
+                                "x": 12,
+                                "y": 8
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "title": "Overview"
+                    }
+                  },
+                  {
+                    "kind": "RowsLayoutRow",
+                    "spec": {
+                      "collapse": false,
+                      "layout": {
+                        "kind": "AutoGridLayout",
+                        "spec": {
+                          "columnWidthMode": "standard",
+                          "items": [
+                            {
+                              "kind": "AutoGridLayoutItem",
+                              "spec": {
+                                "element": {
+                                  "kind": "ElementReference",
+                                  "name": "panel-1"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "AutoGridLayoutItem",
+                              "spec": {
+                                "element": {
+                                  "kind": "ElementReference",
+                                  "name": "panel-2"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "AutoGridLayoutItem",
+                              "spec": {
+                                "element": {
+                                  "kind": "ElementReference",
+                                  "name": "panel-3"
+                                }
+                              }
+                            }
+                          ],
+                          "maxColumnCount": 3,
+                          "rowHeightMode": "standard"
+                        }
+                      },
+                      "title": "Resource Monitoring"
+                    }
+                  },
+                  {
+                    "kind": "RowsLayoutRow",
+                    "spec": {
+                      "collapse": false,
+                      "layout": {
+                        "kind": "GridLayout",
+                        "spec": {
+                          "items": [
+                            {
+                              "kind": "GridLayoutItem",
+                              "spec": {
+                                "element": {
+                                  "kind": "ElementReference",
+                                  "name": "panel-8"
+                                },
+                                "height": 8,
+                                "width": 12,
+                                "x": 0,
+                                "y": 0
+                              }
+                            },
+                            {
+                              "kind": "GridLayoutItem",
+                              "spec": {
+                                "element": {
+                                  "kind": "ElementReference",
+                                  "name": "panel-9"
+                                },
+                                "height": 8,
+                                "width": 12,
+                                "x": 12,
+                                "y": 0
+                              }
+                            },
+                            {
+                              "kind": "GridLayoutItem",
+                              "spec": {
+                                "element": {
+                                  "kind": "ElementReference",
+                                  "name": "panel-10"
+                                },
+                                "height": 8,
+                                "width": 12,
+                                "x": 0,
+                                "y": 8
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "title": "Machine Learning"
+                    }
+                  }
+                ]
+              }
+            },
+            "title": "New tab"
+          }
+        }
+      ]
+    }
+  },
+  "links": [],
+  "liveNow": false,
+  "preferences": {
+    "layout": {
+      "kind": "GridLayout",
+      "spec": {
+        "items": []
+      }
+    }
+  },
+  "preload": false,
+  "tags": [],
+  "timeSettings": {
+    "autoRefresh": "",
+    "autoRefreshIntervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "fiscalYearStartMonth": 0,
+    "from": "2026-06-15T03:11:31.343Z",
+    "hideTimepicker": false,
+    "timezone": "browser",
+    "to": "2026-06-15T15:11:31.343Z"
+  },
+  "title": "Smart Infrastructure Monitoring",
+  "variables": []
+}

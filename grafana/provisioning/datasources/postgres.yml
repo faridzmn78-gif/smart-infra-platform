@@ -1,0 +1,21 @@
+apiVersion: 1
+
+datasources:
+  - name: PostgreSQL
+
+    type: postgres
+
+    access: proxy
+
+    url: postgres:5432
+
+    user: admin
+
+    secureJsonData:
+      password: admin123
+
+    jsonData:
+      database: smart_infra
+      sslmode: disable
+
+    isDefault: true

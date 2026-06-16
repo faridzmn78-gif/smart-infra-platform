@@ -1,0 +1,14 @@
+---
+- name: Restart Apache Service
+
+  hosts: local
+
+  become: false
+
+  tasks:
+
+    - name: Show restart message
+
+      debug:
+
+        msg: "Apache restart action executed"

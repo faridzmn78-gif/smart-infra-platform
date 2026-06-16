@@ -1,0 +1,14 @@
+---
+- name: Cleanup Disk
+
+  hosts: local
+
+  become: false
+
+  tasks:
+
+    - name: Show cleanup message
+
+      debug:
+
+        msg: "Disk cleanup action executed"
