@@ -54,6 +54,11 @@ jobs:
           pip install -r requirements.txt
           pip install pytest httpx
 
+      - name: Create Database Tables
+        run: |
+          cd backend
+          python -c "from app.main import startup; startup()"
+
       - name: Run Tests
         run: |
           cd backend
