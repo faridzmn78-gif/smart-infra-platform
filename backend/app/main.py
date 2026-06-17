@@ -3,8 +3,10 @@ from fastapi import FastAPI
 from app.database.db import engine
 
 from app.models.metric import Base
-from app.models.anomaly import Anomaly
+
+# Import all models so SQLAlchemy registers them
 from app.models.server import Server
+from app.models.anomaly import Anomaly
 from app.models.ml_prediction import MLPrediction
 
 from app.services.metric_service import (
@@ -37,12 +39,6 @@ app = FastAPI()
 def startup():
 
     Base.metadata.create_all(bind=engine)
-
-    Server.metadata.create_all(bind=engine)
-
-    Anomaly.metadata.create_all(bind=engine)
-
-    MLPrediction.metadata.create_all(bind=engine)
 
 
 @app.get("/")

@@ -3,13 +3,13 @@ name: Backend Tests
 on:
   push:
     branches:
-      - master
       - main
+      - master
 
   pull_request:
     branches:
-      - master
       - main
+      - master
 
 jobs:
   test:
@@ -29,10 +29,10 @@ jobs:
           - 5432:5432
 
         options: >-
-          --health-cmd="pg_isready -U admin"
+          --health-cmd="pg_isready -U admin -d smart_infra"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5
+          --health-retries=10
 
     env:
       DATABASE_URL: postgresql://admin:admin123@localhost:5432/smart_infra
@@ -44,20 +44,24 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v5
-
         with:
           python-version: "3.12"
 
       - name: Install Dependencies
         run: |
           cd backend
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest httpx
+          pip install pytest httpx psycopg2-binary
 
-      - name: Create Database Tables
+      - name: Wait for PostgreSQL
+        run: |
+          sleep 20
+
+      - name: Initialize Database
         run: |
           cd backend
-          python -c "from app.main import startup; startup()"
+          python init_db.py
 
       - name: Run Tests
         run: |
